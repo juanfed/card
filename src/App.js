@@ -1,25 +1,45 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Card from './components/Card';
+
+
 
 function App() {
+
+  const [mostrar, setMostrar] = useState(false);
+  const [result, setResult] = useState({});
+  const consultarAPI = async () => {
+    setMostrar(true)
+    if (true) {
+      const url = `https://rickandmortyapi.com/api/character/2`;
+      const respuesta = await fetch(url);
+      const resultado = await respuesta.json();
+      if(respuesta.status === 200){
+        setResult(resultado);
+      }else{
+        setResult("error")
+        console.log(result)
+      }
+      console.log(resultado)
+      console.log(resultado.name)
+      console.log(resultado.image)
+      console.log(resultado.species)
+
+    }
+  }
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Card de personajes aleatorios de Rick and Morty</h1>
+      <div>
+        {(mostrar) ? <Card result={result} /> : null}
+      </div>
+      <br />
+      <button onClick={consultarAPI}>Personaje randon</button>
     </div>
-  );
+  )
 }
 
 export default App;
