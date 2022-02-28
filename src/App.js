@@ -25,9 +25,6 @@ function App() {
         setResult("error")
         console.log(result)
       }
-      console.log(resultado)
-      console.log(resultado.location.name)
-
     }
   }
 
