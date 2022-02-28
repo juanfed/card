@@ -1,45 +1,35 @@
 import React, { useState } from 'react';
+import { Provider } from 'react-redux';
+import store from './redux/store.js';
 import './App.css';
 import Card from './components/Card';
 
-
-
 function App() {
   let randon = Math.trunc(Math.random() * 1000);
-  if(randon > 810){
-    while(randon > 810){
+  if (randon > 810) {
+    while (randon > 810) {
       randon = Math.trunc(Math.random() * 1000);
     }
   }
-  const [mostrar, setMostrar] = useState(false);
-  const [result, setResult] = useState({});
-  const consultarAPI = async () => {
-    setMostrar(true)
-    if (true) {
-      const url = `https://rickandmortyapi.com/api/character/${randon}`;
-      const respuesta = await fetch(url);
-      const resultado = await respuesta.json();
-      if(respuesta.status === 200){
-        setResult(resultado);
-      }else{
-        setResult("error")
-        console.log(result)
-      }
-    }
+  const [number, setNumber] = useState(1);
+  // eslint-disable-next-line no-unused-vars
+  const [mostrar, setMostrar] = useState(true);
+  const consultar = () =>{
+    setNumber(randon)
   }
 
 
-
-
   return (
-    <div className="App">
-      <h1>Card de personajes aleatorios de Rick and Morty</h1>
-      <div>
-        {(mostrar) ? <Card result={result} /> : null}
+    <Provider store={store}>
+      <div className="App">
+        <h1 className='App--title'>Card de personajes aleatorios de Rick and Morty</h1>
+        <div>
+          {(mostrar) ? <Card number={number} /> : null}
+        </div>
+        <br />
+        <button onClick={consultar} className="App--boton">Personaje randon</button>
       </div>
-      <br />
-      <button onClick={consultarAPI}>Personaje randon</button>
-    </div>
+    </Provider>
   )
 }
 
